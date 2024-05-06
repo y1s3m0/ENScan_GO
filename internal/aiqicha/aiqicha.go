@@ -12,6 +12,7 @@ import (
 	"github.com/wgpsec/ENScan/common/outputfile"
 	"github.com/wgpsec/ENScan/common/utils"
 	"github.com/wgpsec/ENScan/common/utils/gologger"
+	"github.com/wgpsec/ENScan/runner"
 	urlTool "net/url"
 	"os"
 	"strconv"

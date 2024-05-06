@@ -8,7 +8,6 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
-	"github.com/wgpsec/ENScan/runner"
 	"github.com/wgpsec/ENScan/common"
 	"github.com/wgpsec/ENScan/common/outputfile"
 	"github.com/wgpsec/ENScan/common/utils"
@@ -264,7 +263,7 @@ func getCompanyInfoById(pid string, deep int, isEnDetail bool, inFrom string, se
 		var kidOptions *common.ENOptions
 		*kidOptions = *options
 		kidOptions.KeyWord = res.Get("entName").String()
-		RunOtherJob(kidOptions)
+		runner.RunOtherJob(kidOptions)
 	}
 
 }

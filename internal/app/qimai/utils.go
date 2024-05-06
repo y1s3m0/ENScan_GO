@@ -52,8 +52,8 @@ func getENMap() map[string]*EnsGo {
 		"app": {
 			name:    "APP",
 			api:     "company/getCompanyApplist",
-			field:   []string{"appInfo.appName", "app_category", "", "time", "", "appInfo.icon", "", "", ""},
-			keyWord: []string{"名称", "分类", "当前版本", "更新时间", "简介", "logo", "Bundle ID", "链接", "market"},
+			field:   []string{"appInfo.appName", "app_category", "", "time", "","appInfo.publisher", "appInfo.icon", "", "", ""},
+			keyWord: []string{"名称", "分类", "当前版本", "更新时间", "简介","发布者", "logo", "Bundle ID", "链接", "market"},
 		},
 	}
 	for k, _ := range ensInfoMap {

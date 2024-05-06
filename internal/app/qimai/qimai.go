@@ -27,7 +27,7 @@ func GetInfoByKeyword(options *common.ENOptions) (ensInfos *common.EnInfos, ensO
 		}
 		gologger.Errorf("没有查询到关键词 “%s” \n", ensInfos.Name)
 	} else {
-		gologger.Infof("关键词：“%s” 查询到 %d 个结果，默认选择第一个 \n", ensInfos.Name, len(res))
+		gologger.Infof("七麦关键词：“%s” 查询到 %d 个结果，默认选择第一个 \n", ensInfos.Name, len(res))
 		if res[0].Get("company.id").Int() != 0 {
 			fmt.Println(res[0].Get("company.name"))
 			ensInfos.Infos = GetInfoByCompanyId(res[0].Get("company.id").Int(), options)

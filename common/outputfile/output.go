@@ -85,8 +85,8 @@ var ENSMapLN = map[string]*ENSMap{
 	},
 	"app": {
 		Name:    "应用",
-		JField:  []string{"name", "category", "version", "update_at", "description", "logo", "bundle_id", "link", "market"},
-		KeyWord: []string{"名称", "分类", "当前版本", "更新时间", "简介", "logo", "Bundle ID", "链接", "market"},
+		JField:  []string{"name", "category", "version", "update_at", "description","publisher","logo", "bundle_id", "link", "market"},
+		KeyWord: []string{"名称", "分类", "当前版本", "更新时间", "简介","发布者", "logo", "Bundle ID", "链接", "market"},
 	},
 	"copyright": {
 		Name:    "软件著作权",

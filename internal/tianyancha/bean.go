@@ -110,8 +110,8 @@ func getENMap() map[string]*EnsGo {
 			//api:            "pagination/product.xhtml",
 			tgNum:      "manageStatus.subItem.productinfo.num",
 			rf:         "items",
-			field:      []string{"filterName", "classes", "", "", "brief", "icon", "", "", ""},
-			keyWord:    []string{"名称", "分类", "当前版本", "更新时间", "简介", "logo", "Bundle ID", "链接", "market"},
+			field:      []string{"filterName", "classes", "", "", "brief", "","icon", "", "", ""},
+			keyWord:    []string{"名称", "分类", "当前版本", "更新时间", "简介","发布者", "logo", "Bundle ID", "链接", "market"},
 			PosiToTake: []int{2, 6, 0, 0, 5, 2, 0, 0, 0},
 		},
 		"weibo": {

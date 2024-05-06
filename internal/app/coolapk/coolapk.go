@@ -25,8 +25,8 @@ func GetReq(options *common.ENOptions) (ensInfos *common.EnInfos, ensOutMap map[
 	ensInfos = &common.EnInfos{}
 	ensInfos.Infos = make(map[string][]gjson.Result)
 	ensOutMap = make(map[string]*outputfile.ENSMap)
-	field := []string{"title", "catName", "apkversionname", "lastupdate", "shorttitle", "logo", "apkname", "", "", "inFrom"}
-	keyWord := []string{"名称", "分类", "当前版本", "更新时间", "简介", "logo", "Bundle ID", "链接", "market", "数据关联"}
+	field := []string{"title", "catName", "apkversionname", "lastupdate", "shorttitle","", "logo", "apkname", "", "", "inFrom"}
+	keyWord := []string{"名称", "分类", "当前版本", "更新时间", "简介","发布者",  "logo", "Bundle ID", "链接", "market", "数据关联"}
 	ensOutMap["app"] = &outputfile.ENSMap{Name: "app", Field: field, KeyWord: keyWord}
 	developer := options.KeyWord
 	gologger.Infof("酷安API查询 %s\n", developer)

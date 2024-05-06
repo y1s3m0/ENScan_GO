@@ -80,8 +80,8 @@ func getENMap() map[string]*EnsGo {
 		"app": {
 			name:    "APP",
 			api:     "c/appinfoAjax",
-			field:   []string{"name", "classify", "", "", "logoBrief", "logo", "", "", ""},
-			keyWord: []string{"名称", "分类", "当前版本", "更新时间", "简介", "logo", "Bundle ID", "链接", "market"},
+			field:   []string{"name", "classify", "", "", "logoBrief","","logo", "", "", ""},
+			keyWord: []string{"名称", "分类", "当前版本", "更新时间", "简介","发布者",  "logo", "Bundle ID", "链接", "market"},
 		},
 		"weibo": {
 			name:    "微博",

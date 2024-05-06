@@ -21,9 +21,17 @@ func GetInfoByKeyword(options *common.ENOptions) (ensInfos *common.EnInfos, ensO
 		"market": "1", //默认用360
 	}
 	res := gjson.Parse(GetReq("search/android", params, options)).Get("appList").Array()
-	if res[0].Get("company.id").Int() != 0 {
-		fmt.Println(res[0].Get("company.name"))
-		ensInfos.Infos = GetInfoByCompanyId(res[0].Get("company.id").Int(), options)
+	if len(res) == 0 {
+		if options.IsDebug {
+			gologger.Debugf("【查询错误信息】\n%s\n", ensInfos.Name)
+		}
+		gologger.Errorf("没有查询到关键词 “%s” \n", ensInfos.Name)
+	} else {
+		gologger.Infof("关键词：“%s” 查询到 %d 个结果，默认选择第一个 \n", ensInfos.Name, len(res))
+		if res[0].Get("company.id").Int() != 0 {
+			fmt.Println(res[0].Get("company.name"))
+			ensInfos.Infos = GetInfoByCompanyId(res[0].Get("company.id").Int(), options)
+		}
 	}
 	for k, v := range getENMap() {
 		ensOutMap[k] = &outputfile.ENSMap{Name: v.name, Field: v.field, KeyWord: v.keyWord}

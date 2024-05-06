@@ -399,7 +399,11 @@ func RunOtherJob(options *common.ENOptions) {
 			//	}
 			//}()
 			res, ensOutMap := qimai.GetInfoByKeyword(options)
-			outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+			if options.IsMergeOut {
+				outputfile.MergeOutPut(res, ensOutMap, "七麦", options)
+			} else {
+				outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+			}
 			wg.Done()
 		}()
 	}
@@ -418,15 +422,4 @@ func RunOtherJob(options *common.ENOptions) {
 	}
 
 	wg.Wait()
-
-	if !options.IsOnline {
-		if options.IsWebMode {
-			outputfile.OutPutXDBByMergeEnInfo(options)
-		} else if options.IsMergeOut && options.InputFile == "" && !options.IsApiMode {
-			// 如果不是API模式，而且不是批量文件形式查询 不是API 就合并导出到表格里面
-			outputfile.OutPutExcelByMergeEnInfo(options)
-		} else if options.IsApiMode {
-			outputfile.OutPutJsonByMergeEnInfo(options)
-		}
-	}
 }

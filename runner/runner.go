@@ -240,7 +240,7 @@ func RunJob(options *common.ENOptions) {
 			//}()
 			res, ensOutMap := chinaz.GetEnInfoByPid(options)
 			if options.IsMergeOut {
-				outputfile.MergeOutPut(res, ensOutMap, "站长之家", options)
+				outputfile.MergeOutPut(res, ensOutMap, "七麦", options)
 			} else {
 				outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
 			}
@@ -259,7 +259,11 @@ func RunJob(options *common.ENOptions) {
 			//	}
 			//}()
 			res, ensOutMap := qimai.GetInfoByKeyword(options)
-			outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+			if options.IsMergeOut {
+				outputfile.MergeOutPut(res, ensOutMap, "阿拉丁指数", options)
+			} else {
+				outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+			}
 			wg.Done()
 		}()
 	}

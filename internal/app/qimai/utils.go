@@ -80,6 +80,8 @@ func sign(params string, url string) string {
 }
 
 func GetReq(url string, params map[string]string, options *common.ENOptions) string {
+	//安全延时
+	time.Sleep(time.Duration(options.DelayTime) * time.Second)
 	client := resty.New()
 	client.SetTimeout(time.Duration(options.TimeOut) * time.Minute)
 	if options.Proxy != "" {

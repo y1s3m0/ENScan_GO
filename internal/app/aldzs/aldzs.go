@@ -14,7 +14,7 @@ import (
 	"strconv"
 )
 
-func getReq(searchType string, data map[string]string) gjson.Result {
+func getReq(searchType string, data map[string]string,options *common.ENOptions) gjson.Result {
 	//安全延时
 	time.Sleep(time.Duration(options.DelayTime) * time.Second)
 
@@ -62,7 +62,7 @@ func GetInfoByKeyword(options *common.ENOptions) (ensInfos *common.EnInfos, ensO
 		"page":       "1",
 		"token":      token,
 		"visit_type": "1",
-	}).Array()
+	},options).Array()
 	if len(appList) == 0 {
 		return
 	}
@@ -86,7 +86,7 @@ func GetInfoByKeyword(options *common.ENOptions) (ensInfos *common.EnInfos, ensO
 		"page":   "1",
 		"size":   "100",
 		"token":  token,
-	}).Array()
+	},options).Array()
 	ensInfos.Infos["wx_app"] = sAppList
 	table = tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"NO", "ID", "小程序名称", "描述"})

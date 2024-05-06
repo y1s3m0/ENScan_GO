@@ -264,11 +264,12 @@ func getCompanyInfoById(pid string, deep int, isEnDetail bool, inFrom string, se
 				}
 			}
 		}
-		
-		var kidOptions *common.ENOptions
-		*kidOptions = *options
-		kidOptions.KeyWord = res.Get("entName").String()
-		RunOtherJob(kidOptions)
+		if deep!=1 {
+			var kidOptions common.ENOptions
+			kidOptions = *options
+			kidOptions.KeyWord = res.Get("entName").String()
+			RunOtherJob(&kidOptions)
+		}
 	}
 
 }

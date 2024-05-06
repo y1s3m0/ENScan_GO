@@ -12,9 +12,13 @@ import (
 	"github.com/wgpsec/ENScan/common/outputfile"
 	"github.com/wgpsec/ENScan/common/utils"
 	"github.com/wgpsec/ENScan/common/utils/gologger"
-	"github.com/wgpsec/ENScan/runner"
 	urlTool "net/url"
 	"os"
+	"sync"
+	"github.com/wgpsec/ENScan/internal/app/aldzs"
+	"github.com/wgpsec/ENScan/internal/app/coolapk"
+	"github.com/wgpsec/ENScan/internal/app/qimai"
+	"github.com/wgpsec/ENScan/internal/chinaz"
 	"strconv"
 	"strings"
 )
@@ -264,7 +268,7 @@ func getCompanyInfoById(pid string, deep int, isEnDetail bool, inFrom string, se
 		var kidOptions *common.ENOptions
 		*kidOptions = *options
 		kidOptions.KeyWord = res.Get("entName").String()
-		runner.RunOtherJob(kidOptions)
+		RunOtherJob(kidOptions)
 	}
 
 }
@@ -331,4 +335,97 @@ func SearchByName(options *common.ENOptions) (enName string) {
 		enName = res[0].Get("titleName").String()
 	}
 	return enName
+}
+
+func RunOtherJob(options *common.ENOptions) {
+	if options.Proxy != "" {
+		gologger.Infof("代理地址: %s\n", options.Proxy)
+	}
+
+	gologger.Infof("关键词:【%s|%s】数据源：%s 数据字段：%s\n", options.KeyWord, options.CompanyID, options.GetType, options.GetField)
+
+	var wg sync.WaitGroup
+
+	// coolapk酷安应用市场查询
+	if utils.IsInList("coolapk", options.GetType) {
+		wg.Add(1)
+		go func() {
+			//defer func() {
+			//	if x := recover(); x != nil {
+			//		gologger.Errorf("[QCC] ERROR: %v", x)
+			//		wg.Done()
+			//	}
+			//}()
+			res, ensOutMap := coolapk.GetReq(options)
+			if options.IsMergeOut {
+				outputfile.MergeOutPut(res, ensOutMap, "酷安", options)
+			} else {
+				outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+
+			}
+			wg.Done()
+		}()
+	}
+
+	// ChinaZ查询
+	if utils.IsInList("chinaz", options.GetType) {
+		wg.Add(1)
+		go func() {
+			//defer func() {
+			//	if x := recover(); x != nil {
+			//		gologger.Errorf("[QCC] ERROR: %v", x)
+			//		wg.Done()
+			//	}
+			//}()
+			res, ensOutMap := chinaz.GetEnInfoByPid(options)
+			if options.IsMergeOut {
+				outputfile.MergeOutPut(res, ensOutMap, "站长之家", options)
+			} else {
+				outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+			}
+			wg.Done()
+		}()
+	}
+
+	// 七麦数据
+	if utils.IsInList("qimai", options.GetType) {
+		wg.Add(1)
+		go func() {
+			//defer func() {
+			//	if x := recover(); x != nil {
+			//		gologger.Errorf("[QCC] ERROR: %v", x)
+			//		wg.Done()
+			//	}
+			//}()
+			res, ensOutMap := qimai.GetInfoByKeyword(options)
+			outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+			wg.Done()
+		}()
+	}
+
+	// 微信小程序查询
+	if utils.IsInList("aldzs", options.GetType) {
+		wg.Add(1)
+		options.CookieInfo = options.ENConfig.Cookies.Aldzs
+		res, ensOutMap := aldzs.GetInfoByKeyword(options)
+		if options.IsMergeOut {
+			outputfile.MergeOutPut(res, ensOutMap, "阿拉丁指数", options)
+		} else {
+			outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+		}
+		wg.Done()
+	}
+
+	wg.Wait()
+
+	if !options.IsOnline {
+		if options.IsWebMode {
+			outputfile.OutPutXDBByMergeEnInfo(options)
+		} else if options.IsMergeOut && options.InputFile == "" && !options.IsApiMode {
+			// 如果不是API模式，而且不是批量文件形式查询 不是API 就合并导出到表格里面
+			outputfile.OutPutExcelByMergeEnInfo(options)
+		} else if options.IsApiMode {
+			outputfile.OutPutJsonByMergeEnInfo(options)
+		}
+	}
 }

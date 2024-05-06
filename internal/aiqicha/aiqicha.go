@@ -8,6 +8,7 @@ import (
 	"github.com/olekukonko/tablewriter"
 	"github.com/tidwall/gjson"
 	"github.com/tidwall/sjson"
+	"github.com/wgpsec/ENScan/runner"
 	"github.com/wgpsec/ENScan/common"
 	"github.com/wgpsec/ENScan/common/outputfile"
 	"github.com/wgpsec/ENScan/common/utils"

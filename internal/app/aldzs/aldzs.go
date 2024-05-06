@@ -10,6 +10,7 @@ import (
 	"github.com/wgpsec/ENScan/common/outputfile"
 	"github.com/wgpsec/ENScan/common/utils/gologger"
 	"net/http"
+	"time"
 	"os"
 	"strconv"
 )

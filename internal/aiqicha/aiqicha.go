@@ -261,8 +261,8 @@ func getCompanyInfoById(pid string, deep int, isEnDetail bool, inFrom string, se
 		}
 		
 		var kidOptions common.ENOptions
-		kidOptions=options
-		kidOptions.keyWord =res.Get("entName").String()
+		*kidOptions = *options
+		kidOptions.keyWord = res.Get("entName").String()
 		RunOtherJob(kidOptions)
 	}
 

@@ -25,7 +25,11 @@ func getReq(searchType string, data map[string]string) gjson.Result {
 		"Content-Type": {"application/x-www-form-urlencoded; charset=UTF-8"},
 		"Referer":      {"https://www.aldzs.com"},
 	}
-	resp, err := client.R().SetFormData(data).Post(url)
+	clientR := client.R()
+	clientR.Method = "POST"
+	clientR.SetFormData(data)
+	clientR.URL = url
+	resp, err := clientR.Send()
 	if err != nil {
 		fmt.Println(err)
 	}

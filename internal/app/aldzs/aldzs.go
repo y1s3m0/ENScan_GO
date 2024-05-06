@@ -15,9 +15,17 @@ import (
 )
 
 func getReq(searchType string, data map[string]string) gjson.Result {
-	url := fmt.Sprintf("https://zhishuapi.aldwx.com/Main/action/%s", searchType)
+	//安全延时
+	time.Sleep(time.Duration(options.DelayTime) * time.Second)
+
+	//计算签名
+	//构造ChinaZ请求
 	client := resty.New()
-	client.SetTimeout(common.RequestTimeOut)
+	client.SetTimeout(time.Duration(options.TimeOut) * time.Minute)
+	if options.Proxy != "" {
+		client.SetProxy(options.Proxy)
+	}
+	url := fmt.Sprintf("https://zhishuapi.aldwx.com/Main/action/%s", searchType)
 	client.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 	client.Header = http.Header{
 		"User-Agent":   {"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36"},

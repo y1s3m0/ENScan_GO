@@ -56,5 +56,6 @@ func Flag(Info *ENOptions) {
 	flag.BoolVar(&Info.IsMerge, "no-merge", false, "批量查询【取消】合并导出")
 	flag.BoolVar(&Info.Version, "v", false, "版本信息")
 	flag.BoolVar(&Info.IsEmailPro, "email", false, "获取email信息")
+	flag.StringVar(&Info.CfgPath, "cfgpath", "", "配置文件路径")
 	flag.Parse()
 }

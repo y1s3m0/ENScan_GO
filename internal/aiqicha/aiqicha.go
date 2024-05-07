@@ -46,8 +46,9 @@ func pageParseJson(content string) gjson.Result {
 // GetEnInfoByPid 根据PID获取公司信息
 func GetEnInfoByPid(options *common.ENOptions) (*common.EnInfos, map[string]*outputfile.ENSMap) {
 	pid := ""
+	var res []gjson.Result
 	if options.CompanyID == "" {
-		_, pid = SearchName(options)
+		res, pid = SearchName(options)
 	} else {
 		pid = options.CompanyID
 	}
@@ -62,7 +63,11 @@ func GetEnInfoByPid(options *common.ENOptions) (*common.EnInfos, map[string]*out
 	gologger.Infof("查询PID %s\n", pid)
 
 	ensInfos.Infos = make(map[string][]gjson.Result)
-	getCompanyInfoById(pid, 1, true, "", options.GetField, ensInfos, options)
+	enName:=""
+	if len(res) > 0 {
+		enName = res[0].Get("titleName").String()
+	}
+	getCompanyInfoById(pid, 1, true, enName, options.GetField, ensInfos, options)
 	options.CompanyName = ensInfos.Name
 
 	for k, v := range getENMap() {
@@ -172,6 +177,7 @@ func getCompanyInfoById(pid string, deep int, isEnDetail bool, inFrom string, se
 				// 添加来源信息，并把信息存储到数据里面
 				for _, y := range t {
 					valueTmp, _ := sjson.Set(y.Raw, "inFrom", inFrom)
+					valueTmp, _ = sjson.Set(valueTmp, "enName", res.Get("entName").String())
 					ensInfo.Infos[k] = append(ensInfo.Infos[k], gjson.Parse(valueTmp))
 					//存入临时数据
 					tmpEIS[k] = append(tmpEIS[k], gjson.Parse(valueTmp))

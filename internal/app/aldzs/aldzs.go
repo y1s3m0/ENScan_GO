@@ -80,6 +80,7 @@ func GetInfoByKeyword(options *common.ENOptions) (ensInfos *common.EnInfos, ensO
 	}
 	table.Render()
 	//默认取第一个进行查询
+	//todo 修改关联度 去空去重获取
 	gologger.Infof("查询 %s 开发的相关小程序 【默认取100个】\n", appList[0].Get("company"))
 	appKey := appList[0].Get("appKey").String()
 	sAppList := getReq("Miniapp/App/sameBodyAppList", map[string]string{

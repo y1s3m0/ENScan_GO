@@ -45,6 +45,7 @@ type ENOptions struct {
 	IsMerge        bool   //聚合
 	ClientMode     string //客户端模式
 	IsOnline       bool
+	CfgPath        string
 	ENConfig       *ENConfig
 }
 

@@ -14,6 +14,9 @@ import (
 
 func Parse(options *ENOptions) {
 	//判断版本信息
+	if options.CfgPath!="" {
+		cfgYName=options.CfgPath
+	}
 	if options.Version {
 		gologger.Infof("Current Version: %s\n", GitTag)
 		gologger.Infof("当前所需配置文件版本 V%.1f\n", cfgYV)

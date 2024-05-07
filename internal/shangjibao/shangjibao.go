@@ -65,7 +65,8 @@ func GetInfoByKeyword(options *common.ENOptions)(ensInfos *common.EnInfos, ensOu
 
 	// 添加来源信息，并把信息存储到数据里面
 	for _, y := range dataList {
-		valueTmp, _ := sjson.Set(y.Raw, "inFrom", options.KeyWord)
+		inFrom := "SJB api查询"+options.KeyWord 
+		valueTmp, _ := sjson.Set(y.Raw, "inFrom", inFrom)
 		ensInfos.Infos["icp"] = append(ensInfos.Infos["icp"], gjson.Parse(valueTmp))
 	}
 

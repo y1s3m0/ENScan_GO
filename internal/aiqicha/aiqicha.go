@@ -66,7 +66,7 @@ func GetEnInfoByPid(options *common.ENOptions) (*common.EnInfos, map[string]*out
 	ensInfos.Infos = make(map[string][]gjson.Result)
 	enName:=""
 	if len(res) > 0 {
-		enName = res[0].Get("titleName").String()
+		enName = "查询"+res[0].Get("titleName").String() +"企业信息"
 	}
 	getCompanyInfoById(pid, 1, true, enName, options.GetField, ensInfos, options)
 	options.CompanyName = ensInfos.Name

@@ -11,6 +11,7 @@ import (
 	"github.com/wgpsec/ENScan/common/utils/gologger"
 	"github.com/wgpsec/ENScan/db"
 	"github.com/wgpsec/ENScan/internal/aiqicha"
+	"github.com/wgpsec/ENScan/internal/shangjibao"
 	"github.com/wgpsec/ENScan/internal/app/aldzs"
 	"github.com/wgpsec/ENScan/internal/app/coolapk"
 	"github.com/wgpsec/ENScan/internal/app/qimai"
@@ -207,6 +208,26 @@ func RunJob(options *common.ENOptions) {
 		}
 	}
 
+	//商机宝
+	if utils.IsInList("sjb", options.GetType) {
+		wg.Add(1)
+		go func() {
+			//defer func() {
+			//	if x := recover(); x != nil {
+			//		gologger.Errorf("[QCC] ERROR: %v", x)
+			//		wg.Done()
+			//	}
+			//}()
+			res, ensOutMap := shangjibao.GetInfoByKeyword(options)
+			if options.IsMergeOut {
+				outputfile.MergeOutPut(res, ensOutMap, "七麦", options)
+			} else {
+				outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
+			}
+			wg.Done()
+		}()
+	}
+	
 	// coolapk酷安应用市场查询
 	if utils.IsInList("coolapk", options.GetType) {
 		wg.Add(1)

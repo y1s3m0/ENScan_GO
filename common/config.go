@@ -100,6 +100,7 @@ type ENConfig struct {
 		Aldzs      string `yaml:"aldzs"`
 		Xlb        string `yaml:"xlb"`
 		Aiqicha    string `yaml:"aiqicha"`
+		Shangjibao string `yaml:"shangjibao"`
 		Tianyancha string `yaml:"tianyancha"`
 		Tycid      string `yaml:"tycid"`
 		Qcc        string `yaml:"qcc"`
@@ -164,6 +165,7 @@ var ScanTypeKeys = map[string]string{
 	"coolapk": "酷安市场",
 	"qimai":   "七麦数据",
 	"chinaz":  "站长之家",
+	"sjb":	   "商机宝",
 }
 
 var ScanTypeKeyV = map[string]string{
@@ -205,6 +207,7 @@ web:
     table_prefix: "e_"
 cookies:
   aiqicha: ''           # 爱企查   Cookie
+  shangjibao: ''        # 商机宝   User-Info
   tianyancha: ''        # 天眼查   Cookie
   tycid: ''        		# 天眼查   CApi ID(capi.tianyancha.com)
   aldzs: ''             # 阿拉丁   TOKEN(see README)

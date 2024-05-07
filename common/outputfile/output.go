@@ -40,8 +40,8 @@ var ENSMapLN = map[string]*ENSMap{
 	"icp": {
 		Name:    "ICP信息",
 		Only:    "domain",
-		JField:  []string{"website_name", "website", "domain", "icp", "company_name"},
-		KeyWord: []string{"网站名称", "网址", "域名", "网站备案/许可证号", "公司名称"},
+		JField:  []string{"website_name", "website", "domain", "icp", "company_name","recordTime"},
+		KeyWord: []string{"网站名称", "网址", "域名", "网站备案/许可证号", "公司名称","备案时间"},
 	},
 	"wx_app": {
 		Name:    "微信小程序",

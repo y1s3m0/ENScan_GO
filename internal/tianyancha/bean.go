@@ -99,8 +99,8 @@ func getENMap() map[string]*EnsGo {
 			//api:        "pagination/icp.xhtml",
 			tgNum:      "knowledgeProperty.subItem.icpCount.num",
 			rf:         "item",
-			field:      []string{"webName", "webSite", "ym", "liscense", "companyName"},
-			keyWord:    []string{"网站名称", "网址", "域名", "网站备案/许可证号", "公司名称"},
+			field:      []string{"webName", "webSite", "ym", "liscense", "companyName",""},
+			keyWord:    []string{"网站名称", "网址", "域名", "网站备案/许可证号", "公司名称","备案时间"},
 			PosiToTake: []int{3, 4, 5, 6, 0},
 		},
 		"app": {

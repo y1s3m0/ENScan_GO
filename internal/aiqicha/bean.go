@@ -74,8 +74,8 @@ func getENMap() map[string]*EnsGo {
 		"icp": {
 			name:    "ICP备案",
 			api:     "detail/icpinfoAjax",
-			field:   []string{"siteName", "homeSite", "domain", "icpNo", "enName"},
-			keyWord: []string{"网站名称", "网址", "域名", "网站备案/许可证号", "公司名称"},
+			field:   []string{"siteName", "homeSite", "domain", "icpNo", "enName",""},
+			keyWord: []string{"网站名称", "网址", "域名", "网站备案/许可证号", "公司名称","备案时间"},
 		},
 		"app": {
 			name:    "APP",

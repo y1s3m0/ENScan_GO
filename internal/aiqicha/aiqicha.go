@@ -365,7 +365,7 @@ func RunOtherJob(options *common.ENOptions) {
 			//}()
 			res, ensOutMap := shangjibao.GetInfoByKeyword(options)
 			if options.IsMergeOut {
-				outputfile.MergeOutPut(res, ensOutMap, "七麦", options)
+				outputfile.MergeOutPut(res, ensOutMap, "商机宝", options)
 			} else {
 				outputfile.OutPutExcelByEnInfo(res, ensOutMap, options)
 			}

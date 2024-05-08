@@ -36,6 +36,7 @@ type ENOptions struct {
 	CompanyName    string
 	GetField       []string
 	GetType        []string
+	CompanyCheckList    map[string][]string
 	IsDebug        bool
 	Deep           int
 	IsJsonOutput   bool

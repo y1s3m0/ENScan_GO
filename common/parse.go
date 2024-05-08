@@ -98,10 +98,14 @@ func Parse(options *ENOptions) {
 	}
 	options.GetType = utils.SetStr(options.GetType)
 	var tmp []string
+	options.CompanyCheckList=make(map[string][]string)
 	for _, v := range options.GetType {
 		if _, ok := ScanTypeKeys[v]; !ok {
 			gologger.Errorf("没有这个%s查询方式\n支持列表\n%s", v, ScanTypeKeys)
 		} else {
+			if options.CompanyCheckList[v] == nil{
+				options.CompanyCheckList[v] = make([]string,0)
+			}
 			tmp = append(tmp, v)
 		}
 	}

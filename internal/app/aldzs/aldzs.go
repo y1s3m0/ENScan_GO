@@ -80,9 +80,31 @@ func GetInfoByKeyword(options *common.ENOptions) (ensInfos *common.EnInfos, ensO
 	}
 	table.Render()
 	//默认取第一个进行查询
-	//todo 修改关联度 去空去重获取
-	gologger.Infof("查询 %s 开发的相关小程序 【默认取100个】\n", appList[0].Get("company"))
-	appKey := appList[0].Get("appKey").String()
+	var appKey string
+	if list, ok := options.CompanyCheckList["aldzs"]; ok {
+		// 遍历列表，检查是否存在目标 value
+		valueExists := false
+		for i:=0;i<len(appList);i++{
+			if appList[i].Get("appKey").String()==""&&appList[i].Get("appKey").String()=="0"{
+				continue
+			}
+			for _, v := range list {
+				if v == appList[i].Get("appKey").String() {
+					gologger.Infof("已查询过 '%s'\n", appList[i].Get("company"))
+					valueExists = true
+					break
+				}
+			}
+			if !valueExists {
+				gologger.Infof("查询 %s 开发的相关小程序 【默认取100个】\n", appList[i].Get("company"))
+				appKey = appList[i].Get("appKey").String()
+				break
+			}
+		}
+	} else {
+		gologger.Errorf("options.CompanyCheckList aldzs不存在\n")
+	}
+
 	sAppList := getReq("Miniapp/App/sameBodyAppList", map[string]string{
 		"appKey": appKey,
 		"page":   "1",

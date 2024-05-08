@@ -27,10 +27,29 @@ func GetInfoByKeyword(options *common.ENOptions) (ensInfos *common.EnInfos, ensO
 		}
 		gologger.Errorf("没有查询到关键词 “%s” \n", ensInfos.Name)
 	} else {
-		gologger.Infof("七麦关键词：“%s” 查询到 %d 个结果，默认选择第一个 \n", ensInfos.Name, len(res))
-		if res[0].Get("company.id").Int() != 0 {
-			fmt.Println(res[0].Get("company.name"))
-			ensInfos.Infos = GetInfoByCompanyId(res[0].Get("company.id").Int(), options)
+		gologger.Infof("七麦关键词：“%s” 查询到 %d 个结果\n", ensInfos.Name, len(res))
+		if list, ok := options.CompanyCheckList["qimai"]; ok {
+			// 遍历列表，检查是否存在目标 value
+			valueExists := false
+			for i:=0;i<len(res);i++{
+				if res[i].Get("company.id").String()==""&&res[i].Get("company.id").String()=="0"{
+					continue
+				}
+				for _, v := range list {
+					if v == res[i].Get("company.id").String() {
+						gologger.Infof("已查询过 '%s'\n", res[i].Get("company.name"))
+						valueExists = true
+						break
+					}
+				}
+				if !valueExists &&res[i].Get("company.id").Int()!=0{
+					gologger.Infof("'%s'\n",res[i].Get("company.name").String())
+					ensInfos.Infos = GetInfoByCompanyId(res[i].Get("company.id").Int(), options)
+					break
+				}
+			}
+		} else {
+			gologger.Errorf("options.CompanyCheckList 七麦不存在\n")
 		}
 	}
 	for k, v := range getENMap() {
